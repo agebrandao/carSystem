@@ -15,7 +15,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public Optional<User> findUserById(@PathVariable String id) {
+    public Optional<User> findUserById(@PathVariable Long id) {
         return userRepository.findById(id);
     }
 
@@ -31,7 +31,7 @@ public class UserService {
         return userRepository.findByLogin(login);
     }
 
-    public User saveUser(User user) {
+    public User saveUser(User user) {    	
         return userRepository.save(user);
     }
 

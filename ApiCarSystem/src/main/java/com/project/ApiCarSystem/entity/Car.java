@@ -17,22 +17,26 @@ import org.springframework.test.context.jdbc.Sql;
 public class Car {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private Long id;
+	
+	@Column(name = "year")
+    //@NotEmpty(message = "*Please provide the car license Plate")
+    private Integer year;    
 
-    @Column(name = "licensePlate")
-    @NotEmpty(message = "*Please provide the car license Plate")
+	@Column(name = "licensePlate")
+    //@NotEmpty(message = "*Please provide the car license Plate")
     @Size(max = 8)
     private String licensePlate;
    
 	@Column(name = "model")
-    @NotEmpty(message = "*Please provide the car model")
+    //@NotEmpty(message = "*Please provide the car model")
     @Size(max = 15)
     private String model;
     
     @Column(name = "color")
-    @NotEmpty(message = "*Please provide the car color")
+    //@NotEmpty(message = "*Please provide the car color")
     @Size(max = 15)
     private String color;
 
@@ -66,6 +70,14 @@ public class Car {
 
 	public void setColor(String color) {
 		this.color = color;
+	}
+	
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }

@@ -10,29 +10,31 @@ import javax.validation.constraints.Size;
 
 import org.springframework.test.context.jdbc.Sql;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 @Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "firstName")
-    @NotEmpty(message = "*Please provide your first name")
+	@Column(name = "firstName")
+    //@NotEmpty(message = "*Please provide your first name")
     @Size(max = 30)
     private String firstName;
     
     @Column(name = "lastName")
-    @NotEmpty(message = "*Please provide your last name")
+    //@NotEmpty(message = "*Please provide your last name")
     @Size(max = 30)
     private String lastName;
     
     @Column(name = "email")
     @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    //@NotEmpty(message = "*Please provide an email")
     @Size(max = 30)
     private String email;
     
@@ -41,21 +43,22 @@ public class User {
     private Date birthday;
 
     @Column(name = "phone")
-    @NotEmpty(message = "*Please provide your telephone")
+    //@NotEmpty(message = "*Please provide your telephone")
     @Size(max = 12)
     private String phone;
     
     @Column(name = "login")
-    @NotEmpty(message = "*Please provide your login")
+    //@NotEmpty(message = "*Please provide your login")
     @Size(max = 15)
     private String login;
 
     @Column(name = "password")
-    @NotEmpty(message = "*Please provide your password")
+    //@NotEmpty(message = "*Please provide your password")
     @Size(max = 8)
     private String password;
     
-    @ManyToMany
+    //@JsonIgnore
+    @OneToMany
     Set<Car> cars;
 
 	public Long getId() {

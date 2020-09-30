@@ -9,6 +9,7 @@ import com.project.ApiCarSystem.entity.User;
 import com.project.ApiCarSystem.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -23,17 +24,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ApiCarSystem/user")
-@CrossOrigin(origins = "*") //Access from any port
+@RequestMapping("/apiCarSystem/users")
 public class UserController {
 
     @Autowired
     private UserService UserService;
 
-    @PostMapping
+    //@PostMapping("/save")
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<User> create( HttpServletRequest request, @RequestBody User user, BindingResult result){
-
+    	
         try {
+        	user.setId(null);
             validateCreateUser(user, result);
             if(result.hasErrors()){                        
                 return ResponseEntity.badRequest().body(user);        
@@ -90,7 +92,7 @@ public class UserController {
     }
     
     @DeleteMapping(value = "/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") String id) {
+	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 
 		Optional<User> opUser = UserService.findUserById(id);
 		User User =  opUser.get();
@@ -117,7 +119,7 @@ public class UserController {
     }
 
     @GetMapping(value = "{id}")
-	public ResponseEntity<User> findById(@PathVariable("id") String id) {
+	public ResponseEntity<User> findById(@PathVariable("id") Long id) {
 
 		Optional<User> opUser = UserService.findUserById(id);
 		User User =  opUser.get();
@@ -129,7 +131,7 @@ public class UserController {
         return ResponseEntity.ok(User);
     }
     
-    @GetMapping(value = "{login}")
+    @GetMapping(value = "/login/{login}")
 	public ResponseEntity<User> findByLogin(String login) {
 
 		User User = UserService.findUserByLogin(login);		

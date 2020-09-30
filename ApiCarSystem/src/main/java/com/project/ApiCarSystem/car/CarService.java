@@ -15,7 +15,7 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public Optional<Car> findCarById(@PathVariable String id) {
+    public Optional<Car> findCarById(@PathVariable Long id) {
         return carRepository.findById(id);
     }
 

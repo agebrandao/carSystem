@@ -23,8 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ApiCarSystem/car")
-@CrossOrigin(origins = "*") //Access from any port
+@RequestMapping("/apiCarSystem/cars")
 public class CarController {
 
     @Autowired
@@ -34,6 +33,7 @@ public class CarController {
     public ResponseEntity<Car> create( HttpServletRequest request, @RequestBody Car car, BindingResult result){
 
         try {
+        	car.setId(null);
             validateCreateCar(car, result);
             if(result.hasErrors()){                        
                 return ResponseEntity.badRequest().body(car);        
@@ -90,7 +90,7 @@ public class CarController {
     }
     
     @DeleteMapping(value = "/{id}")
-	public ResponseEntity<String> delete(@PathVariable("id") String id) {
+	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 
 		Optional<Car> opCar = CarService.findCarById(id);
 		Car Car =  opCar.get();
@@ -117,7 +117,7 @@ public class CarController {
     }
 
     @GetMapping(value = "{id}")
-	public ResponseEntity<Car> findById(@PathVariable("id") String id) {
+	public ResponseEntity<Car> findById(@PathVariable("id") Long id) {
 
 		Optional<Car> opCar = CarService.findCarById(id);
 		Car Car =  opCar.get();
@@ -129,7 +129,7 @@ public class CarController {
         return ResponseEntity.ok(Car);
     }
     
-    @GetMapping(value = "{licensePlate}")
+    @GetMapping(value = "LicensePlate/{licensePlate}")
 	public ResponseEntity<Car> findByLicensePlate(String licensePlate) {
 
 		Car Car = CarService.findCarByLicensePlate(licensePlate);		
