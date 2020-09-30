@@ -1,48 +1,29 @@
-### Car Rental System. 
+### Car System. 
 
-The Car Rental application was implemented with a back-end in node.js and a front-end with ReactJS using Hooks.
+The Car System was implemented with a back-end in Spring boot
 
 ---
 
-## 🏁 Getting Started 
+## ðŸ�� Getting Started 
 
 These instructions will get you a copy of the project for running on your local machine.
 
 ---
 
-### Back-end (car-rental-back)
+### Back-end (ApiCarSystem)
 
-The car-rental-back application runs on port 3001 and uses the Postgres database created in the AWS RDS
+The ApiCarSystm runs on port 3000 and uses the H2 database
 
-The .env file contains the connection data to the database
+The application.properties file contains the connection data to the database
 
-## ⛏️ Built Using 
+## â›�ï¸� Built Using 
 
-- [Express]
-- [NodeJs]
-- [Nodemon]
-- [Sequelize]
-- [sequelize-cli]
-- [pg]
-- [cors]
-- [dotenv]
-- [supertest]
-- [jest]
+- [Maven dependencies]
 
 
-## 🔧 Running the application
+## ðŸ”§ Running the application
 
-Commands for running the application:
-
-1. yarn install (is used to install all dependencies for a project)
-
-2. yarn sequelize db:migrate (Creates the tables in the database)
-
-3. yarn dev (runs the application)
-
-4. yarn test (runs the application test)
-
-5. yarn sequelize db:migrate:undo:all (Delete the database tables)
+Run as Java application
 
 
 ## End-points:
@@ -51,26 +32,36 @@ Commands for running the application:
 
 1. Lists all users:
 
-(Get) http://localhost:3001/users
+(Get) http://localhost:3000/ApiCarSystem/user
 
-🎈 return
+ðŸŽˆ return json
 
 [
-    {
+  {
+    "id": 1,
+    "firstName": "Maria",
+    "lastName": "teste",
+    "email": "teste@gmail,com",
+    "birthday": "2020-01-01",
+    "phone": "8133336658",
+    "login": "maria",
+    "password": "12346",
+    "cars": [
+       {
         "id": 1,
-        "name": "Mary",
-        "email": "mary@email.com",
-        "is_loyalty": true,
-        "createdAt": "2020-02-01T21:02:22.289Z",
-        "updatedAt": "2020-02-04T21:02:22.289Z"
-    }
+        "licensePlate": "kkk-1234",
+        "model": "ka",
+        "color": "preto"
+      }
+    ]
+  }
 ]
 
 2. Create user: 
 
-(Post) http://localhost:3001/users
+(Post) http://localhost:3000/ApiCarSystem/car
 
- 🧐 Body:
+ ðŸ§� Body:
  
  {
 	"name": "Mary",
@@ -78,7 +69,7 @@ Commands for running the application:
 	"is_loyalty": false
 }
 
-🎈 return
+ðŸŽˆ return
 
 {
     "id": 1,
@@ -93,13 +84,13 @@ Commands for running the application:
 
 (PUT) http://localhost:3001/users/1
 
- 🧐 Body:
+ ðŸ§� Body:
 {
 	"name": "Anne",
 	"is_loyalty": false
 }
 
-🎈 return 
+ðŸŽˆ return 
 
 {
     "id": 1,
@@ -114,7 +105,7 @@ Commands for running the application:
 
 (DELETE) http://localhost:3001/users/1
 
-🎈 return
+ðŸŽˆ return
 {
     "message": "Deleted user!"
 }
@@ -123,30 +114,23 @@ Commands for running the application:
 
 1. Lists all cars:
 
-(Get) http://localhost:3001/cars
+(Get) http://localhost:3000/ApiCarSystem/car
 
-🎈 return
+ðŸŽˆ return
 [
-    {
-        "id": 1,
-        "manufacturer": "HONDA",
-        "model": "Accord Sedan LX 2.0 16V 150/156cv Aut.",
-        "model_year": "2020",
-        "category": "2",
-        "weekday_price": "120.00",
-        "weekend_price": "110.00",
-        "weekday_loyalty_price": "110.00",
-        "weekend_loyalty_price": "100.00",
-        "createdAt": "2020-02-03T21:04:51.815Z",
-        "updatedAt": "2020-02-03T21:04:51.815Z"
-    }
- ]
+  {
+    "id": 1,
+    "licensePlate": "kkk-1234",
+    "model": "ka",
+    "color": "preto"
+  }
+]
 
-2. Create user: 
+2. Create car: 
 
 (Post) http://localhost:3001/cars
 
- 🧐 Body:
+ ðŸ§� Body:
  
  {
         "manufacturer": "HONDA",
@@ -161,7 +145,7 @@ Commands for running the application:
         "updatedAt": "2020-02-03T21:04:51.815Z"
   }
 
-🎈 return
+ðŸŽˆ return
 
 {
         "id": 1,
@@ -181,7 +165,7 @@ Commands for running the application:
 
 (PUT) http://localhost:3001/cars/1
 
- 🧐 Body:
+ ðŸ§� Body:
  
 {
 	"manufacturer": "Ford",
@@ -194,7 +178,7 @@ Commands for running the application:
 	"weekend_loyalty_price": 90.00
 }
 
-🎈 return 
+ðŸŽˆ return 
 
 {
     "id": 1,
@@ -214,7 +198,7 @@ Commands for running the application:
 
 (DELETE) http://localhost:3001/users/1
 
-🎈 return
+ðŸŽˆ return
 {
     "message": "Deleted car!"
 }
@@ -225,7 +209,7 @@ Commands for running the application:
 
 (Get) http://localhost:3001/rents
 
-🎈 return
+ðŸŽˆ return
 
 [
  {
@@ -244,7 +228,7 @@ Commands for running the application:
 
 (Post) http://localhost:3001/rents
 
- 🧐 Body:
+ ðŸ§� Body:
  
  {
   {
@@ -256,7 +240,7 @@ Commands for running the application:
  }
 }
 
-🎈 return
+ðŸŽˆ return
 {
     "id": 1,
     "user_id": 1,
@@ -272,14 +256,14 @@ Commands for running the application:
 
 (PUT) http://localhost:3001/rents/1
 
- 🧐 Body:
+ ðŸ§� Body:
 {
 	"start_date": "20201020",
 	"end_date": "20201021",
 	"rent_cost": 300.00
 }
 
-🎈 return 
+ðŸŽˆ return 
 
 {
     "id": 1,
@@ -296,7 +280,7 @@ Commands for running the application:
 
 (DELETE) http://localhost:3001/rents/1
 
-🎈 return
+ðŸŽˆ return
 {
     "message": "Deleted rent!"
 }
@@ -307,12 +291,12 @@ Commands for running the application:
 
 (Get) http://localhost:3001/carsByCategorySearch
 
- 🧐 Body:
+ ðŸ§� Body:
 {
 	"category": "1"
 }
 
-🎈 return 
+ðŸŽˆ return 
 
 [
     {
@@ -334,7 +318,7 @@ Commands for running the application:
 
 (GET) http://localhost:3001/cheapestRentCarSearch 
 
- 🧐 Body:
+ ðŸ§� Body:
 {
 	"start_date": "2020-02-01T21:00:30.086Z",
 	"end_date": "2020-02-04T21:00:30.086Z",
@@ -346,7 +330,7 @@ Commands for running the application:
 	}
 }
 
-🎈 return 
+ðŸŽˆ return 
 
 {
     "user": {
@@ -373,57 +357,10 @@ Commands for running the application:
     "rent_cost": 370.99
 }
 
-3. Search the cheapest rental car by category: (not finished)
- 
-(GET) http://localhost:3001/cheapestRentSearch
-
-
----
-
-### Front-end (car-rental-front)
-
-The car-rental-back application runs on port 3000
-
-## ⛏️ Built Using 
-
-- [react] 16.12.0
-- [axios]
-- [bootstrap]
-- [font-awesome]
-- [react-datepicker]
-- [react-dom]
-- [react-router]
-- [react-router-dom]
-- [react-scripts]
-
-
-## 🔧 Running the application
-
-Commands for running the application:
-
-1. yarn install (is used to install all dependencies for a project)
-
-2. yarn start
-
-## Screens
-
-
-1 List of cars:
-
-Displays all registered cars displaying: manufacturer, model, model year, category, weekday_price, weekend_price, weekday_loyalt_price, weekend_loyalt_price.
-
-On this screen it is possible to filter the cars by category, delete cars and choose a car to update.
-
-2. Car registration:
-
-Displays all fields for registering cars
-
-The data from the manufacturer and model fields are presented according to the data consulted by fipeAPI.
-
-3. Screen Find the car at the lowest price (not finished)
 
 
 
-## ✍️ Authors <a name = "authors"></a>
+
+## âœ�ï¸� Authors <a name = "authors"></a>
 
 - [@annakokay](agebrandao@gmail.com) - Idea & Initial work
