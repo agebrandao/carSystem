@@ -52,13 +52,14 @@ public class User {
     @Size(max = 15)
     private String login;
 
+  //@JsonIgnore
     @Column(name = "password")
     //@NotEmpty(message = "*Please provide your password")
-    @Size(max = 8)
+    @Size(max = 100)
     private String password;
     
     //@JsonIgnore
-    @OneToMany
+    @OneToMany //(cascade=CascadeType.ALL)
     Set<Car> cars;
 
 	public Long getId() {

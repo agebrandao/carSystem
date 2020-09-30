@@ -6,12 +6,16 @@ import java.util.Optional;
 import com.project.ApiCarSystem.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class UserService {
 
+	@Autowired
+	private BCryptPasswordEncoder cryptPassword;
+	
     @Autowired
     private UserRepository userRepository;
 
@@ -30,8 +34,15 @@ public class UserService {
     public User findUserByLogin(String login) {
         return userRepository.findByLogin(login);
     }
+    
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-    public User saveUser(User user) {    	
+    public User saveUser(User user) {  
+    	if(user.getId() == null || (user.getId() != null && user.getPassword() != null)){
+    		user.setPassword(cryptPassword.encode(user.getPassword()));
+    	}
         return userRepository.save(user);
     }
 
