@@ -22,22 +22,19 @@ public class Car {
     private Long id;
 	
 	@Column(name = "year")
-    //@NotEmpty(message = "*Please provide the car license Plate")
     private Integer year;    
 
 	@Column(name = "licensePlate")
-    //@NotEmpty(message = "*Please provide the car license Plate")
-    @Size(max = 8)
+    @NotEmpty(message = "Please provide the car license Plate")
+	@Size(max = 8, message="Maximum size 8 caracters")
     private String licensePlate;
    
-	@Column(name = "model")
-    //@NotEmpty(message = "*Please provide the car model")
-    @Size(max = 15)
+	@Column(name = "model")    
+	@Size(max = 15, message="Maximum size 15 caracters")
     private String model;
     
     @Column(name = "color")
-    //@NotEmpty(message = "*Please provide the car color")
-    @Size(max = 15)
+    @Size(max = 15, message="Maximum size 15 caracters")
     private String color;
 
 	public Long getId() {

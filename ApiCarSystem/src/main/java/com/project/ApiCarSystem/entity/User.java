@@ -23,19 +23,16 @@ public class User {
     private Long id;
 
 	@Column(name = "firstName")
-    //@NotEmpty(message = "*Please provide your first name")
-    @Size(max = 30)
+    @Size(max = 30, message="Maximum size 30 caracters")
     private String firstName;
     
     @Column(name = "lastName")
-    //@NotEmpty(message = "*Please provide your last name")
-    @Size(max = 30)
+    @Size(max = 30, message="Maximum size 30 caracters")
     private String lastName;
     
     @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    //@NotEmpty(message = "*Please provide an email")
-    @Size(max = 30)
+    @Email(message = "Please provide a valid Email")
+    @Size(max = 30, message="Maximum size 30 caracters")
     private String email;
     
     @Temporal(TemporalType.DATE)
@@ -43,22 +40,20 @@ public class User {
     private Date birthday;
 
     @Column(name = "phone")
-    //@NotEmpty(message = "*Please provide your telephone")
-    @Size(max = 12)
+    @Size(max = 15, message="Maximum size 15 caracters")
     private String phone;
     
     @Column(name = "login")
-    //@NotEmpty(message = "*Please provide your login")
-    @Size(max = 15)
+    @NotEmpty(message = "Please provide your login")
+    @Size(max = 15, message="Maximum size 15 caracters")
     private String login;
 
-  //@JsonIgnore
-    @Column(name = "password")
-    //@NotEmpty(message = "*Please provide your password")
-    @Size(max = 100)
-    private String password;
-    
     //@JsonIgnore
+    @Column(name = "password")
+    //@NotEmpty(message = "Please provide your password")
+    @Size(max = 100, message="Maximum size 100 caracters")
+    private String password;
+
     @OneToMany //(cascade=CascadeType.ALL)
     Set<Car> cars;
 

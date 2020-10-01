@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import com.project.ApiCarSystem.Exceptions.FieldMessage;
 import com.project.ApiCarSystem.entity.User;
 import com.project.ApiCarSystem.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,66 +28,54 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    //@PostMapping("/save")
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<User> create( HttpServletRequest request, @RequestBody User user, BindingResult result){
+    
+    @PostMapping()
+	public ResponseEntity<Object> create(@Valid @RequestBody User user, Errors errors) {
     	
-        try {
-        	user.setId(null);
-            validateCreateUser(user, result);
-            if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(user);        
-            }
-            
-            //Creates or updates the user
-            User userPersisted = (User) userService.saveUser(user);
-            return ResponseEntity.ok(userPersisted);            
-
-        } catch (Exception e) {           
-            return ResponseEntity.badRequest().body(user); 
-            
-        }
-    }
-
-    private void validateCreateUser(User User, BindingResult result){
-        if(User.getLogin() == null){
-
-            User UserExists = userService.findUserByLogin(User.getLogin());
-            if (UserExists != null) {
-                result.addError(new ObjectError("User", "Login no information"));
-            }
-        }
-    }
+    	FieldMessage fieldMessage = null;
+    	
+    	try{    		
+    		fieldMessage = new UserValidation(userService).validateCreateUser(user);    	
+    		
+    		if(fieldMessage == null){
+		    	User userPersisted = (User) userService.saveUser(user);
+		    	return ResponseEntity.ok(userPersisted); 
+    		}
+	    	
+    	}catch(Exception e){  
+    		if(errors != null && errors.hasErrors() && fieldMessage == null){
+    			fieldMessage = new FieldMessage(errors.getFieldError().getField(), errors.getFieldError().getDefaultMessage(), errors.getFieldError().getCode() );
+    		}else{
+    			return ResponseEntity.badRequest().body(new FieldMessage("Exception", e.getMessage(), ""));
+    		}
+    	}    	
+    	
+    	return ResponseEntity.badRequest().body(fieldMessage);
+        
+	}
 
     @PutMapping
-    public ResponseEntity<User> update( HttpServletRequest request, @RequestBody User user, BindingResult result){
+    public ResponseEntity<Object> update( HttpServletRequest request, @RequestBody User user, Errors errors){
 
-        try {
-            validateUpdateUser(user, result);
-            if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(user);        
-            }
-            
-            //Creates or updates the user
-            User userPersisted = (User) userService.saveUser(user);
-            return ResponseEntity.ok(userPersisted);
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(user); 
-            
-        }
-    }
-
-    private void validateUpdateUser(User User, BindingResult result) {
-		if (User.getId() == null) {
-			result.addError(new ObjectError("User", "Id no information"));
-			return;
-		}
-		if (User.getLogin() == null) {
-			result.addError(new ObjectError("User", "Login no information"));
-			return;
-		}
+    	FieldMessage fieldMessage = null;
+    	
+    	try{    		
+    		fieldMessage = new UserValidation(userService).validateUpdateUser(user);    	
+    		
+    		if(fieldMessage == null){
+		    	User userPersisted = (User) userService.saveUser(user);
+		    	return ResponseEntity.ok(userPersisted); 
+    		}
+	    	
+    	}catch(Exception e){  
+    		if(errors != null && errors.hasErrors() && fieldMessage == null){
+    			fieldMessage = new FieldMessage(errors.getFieldError().getField(), errors.getFieldError().getDefaultMessage(),errors.getFieldError().getCode());
+    		}else{
+    			return ResponseEntity.badRequest().body(new FieldMessage("Exception", e.getMessage(), ""));
+    		}
+    	}    	
+    	
+    	return ResponseEntity.badRequest().body(fieldMessage);
     }
     
     @DeleteMapping(value = "/{id}")

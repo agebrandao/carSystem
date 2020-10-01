@@ -4,15 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import com.project.ApiCarSystem.entity.Car;
+import com.project.ApiCarSystem.entity.Car;
+import com.project.ApiCarSystem.car.CarValidation;
+import com.project.ApiCarSystem.Exceptions.FieldMessage;
 import com.project.ApiCarSystem.car.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,65 +30,54 @@ public class CarController {
 
     @Autowired
     private CarService carService;
-
-    @PostMapping
-    public ResponseEntity<Car> create( HttpServletRequest request, @RequestBody Car car, BindingResult result){
-
-        try {
-        	car.setId(null);
-            validateCreateCar(car, result);
-            if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(car);        
-            }
-            
-            //Creates or updates the car
-            Car carPersisted = (Car) carService.saveCar(car);
-            return ResponseEntity.ok(carPersisted);            
-
-        } catch (Exception e) {           
-            return ResponseEntity.badRequest().body(car); 
-            
-        }
-    }
-
-    private void validateCreateCar(Car Car, BindingResult result){
-        if(Car.getLicensePlate() == null){
-
-            Car CarExists = carService.findCarByLicensePlate(Car.getLicensePlate());
-            if (CarExists != null) {
-                result.addError(new ObjectError("Car", "License plate no information"));
-            }
-        }
-    }
+    
+    @PostMapping()
+	public ResponseEntity<Object> create(@Valid @RequestBody Car car, Errors errors) {
+    	
+    	FieldMessage fieldMessage = null;
+    	
+    	try{    		
+    		fieldMessage = new CarValidation(carService).validateCreateCar(car);    	
+    		
+    		if(fieldMessage == null){
+		    	Car carPersisted = (Car) carService.saveCar(car);
+		    	return ResponseEntity.ok(carPersisted); 
+    		}
+	    	
+    	}catch(Exception e){  
+    		if(errors != null && errors.hasErrors() && fieldMessage == null){
+    			fieldMessage = new FieldMessage(errors.getFieldError().getField(), errors.getFieldError().getDefaultMessage(), errors.getFieldError().getCode() );
+    		}else{
+    			return ResponseEntity.badRequest().body(new FieldMessage("Exception", e.getMessage(), ""));
+    		}
+    	}    	
+    	
+    	return ResponseEntity.badRequest().body(fieldMessage);
+        
+	}
 
     @PutMapping
-    public ResponseEntity<Car> update( HttpServletRequest request, @RequestBody Car car, BindingResult result){
+    public ResponseEntity<Object> update( HttpServletRequest request, @RequestBody Car car, Errors errors){
 
-        try {
-            validateUpdateCar(car, result);
-            if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(car);        
-            }
-            
-            //Creates or updates the car
-            Car carPersisted = (Car) carService.saveCar(car);
-            return ResponseEntity.ok(carPersisted);
-
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(car); 
-            
-        }
-    }
-
-    private void validateUpdateCar(Car car, BindingResult result) {
-		if (car.getId() == null) {
-			result.addError(new ObjectError("Car", "Id no information"));
-			return;
-		}
-		if (car.getLicensePlate() == null) {
-			result.addError(new ObjectError("Car", "License car no information"));
-			return;
-		}
+    	FieldMessage fieldMessage = null;
+    	
+    	try{    		
+    		fieldMessage = new CarValidation(carService).validateUpdateCar(car);    	
+    		
+    		if(fieldMessage == null){
+		    	Car carPersisted = (Car) carService.saveCar(car);
+		    	return ResponseEntity.ok(carPersisted); 
+    		}
+	    	
+    	}catch(Exception e){  
+    		if(errors != null && errors.hasErrors() && fieldMessage == null){
+    			fieldMessage = new FieldMessage(errors.getFieldError().getField(), errors.getFieldError().getDefaultMessage(), errors.getFieldError().getCode() );
+    		}else{
+    			return ResponseEntity.badRequest().body(new FieldMessage("Exception", e.getMessage(), ""));
+    		}
+    	}    	
+    	
+    	return ResponseEntity.badRequest().body(fieldMessage);
     }
     
     @DeleteMapping(value = "/{id}")
