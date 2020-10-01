@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CarController {
 
     @Autowired
-    private CarService CarService;
+    private CarService carService;
 
     @PostMapping
     public ResponseEntity<Car> create( HttpServletRequest request, @RequestBody Car car, BindingResult result){
@@ -40,7 +40,7 @@ public class CarController {
             }
             
             //Creates or updates the car
-            Car carPersisted = (Car) CarService.saveCar(car);
+            Car carPersisted = (Car) carService.saveCar(car);
             return ResponseEntity.ok(carPersisted);            
 
         } catch (Exception e) {           
@@ -52,7 +52,7 @@ public class CarController {
     private void validateCreateCar(Car Car, BindingResult result){
         if(Car.getLicensePlate() == null){
 
-            Car CarExists = CarService.findCarByLicensePlate(Car.getLicensePlate());
+            Car CarExists = carService.findCarByLicensePlate(Car.getLicensePlate());
             if (CarExists != null) {
                 result.addError(new ObjectError("Car", "License plate no information"));
             }
@@ -60,30 +60,30 @@ public class CarController {
     }
 
     @PutMapping
-    public ResponseEntity<Car> update( HttpServletRequest request, @RequestBody Car Car, BindingResult result){
+    public ResponseEntity<Car> update( HttpServletRequest request, @RequestBody Car car, BindingResult result){
 
         try {
-            validateUpdateCar(Car, result);
+            validateUpdateCar(car, result);
             if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(Car);        
+                return ResponseEntity.badRequest().body(car);        
             }
             
             //Creates or updates the car
-            Car CarPersisted = (Car) CarService.saveCar(Car);
-            return ResponseEntity.ok(CarPersisted);
+            Car carPersisted = (Car) carService.saveCar(car);
+            return ResponseEntity.ok(carPersisted);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(Car); 
+            return ResponseEntity.badRequest().body(car); 
             
         }
     }
 
-    private void validateUpdateCar(Car Car, BindingResult result) {
-		if (Car.getId() == null) {
+    private void validateUpdateCar(Car car, BindingResult result) {
+		if (car.getId() == null) {
 			result.addError(new ObjectError("Car", "Id no information"));
 			return;
 		}
-		if (Car.getLicensePlate() == null) {
+		if (car.getLicensePlate() == null) {
 			result.addError(new ObjectError("Car", "License car no information"));
 			return;
 		}
@@ -92,21 +92,21 @@ public class CarController {
     @DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 
-		Optional<Car> opCar = CarService.findCarById(id);
-		Car Car =  opCar.get();
+		Optional<Car> opCar = carService.findCarById(id);
+		Car car =  opCar.get();
 
-		if (Car == null) {
-			return ResponseEntity.badRequest().body("Register not found id: "  + Car); 
+		if (car == null) {
+			return ResponseEntity.badRequest().body("Register not found id: "  + car); 
 		}
-        CarService.deleteCar(Car);
+        carService.deleteCar(car);
     
-		return ResponseEntity.ok("Register found id: " + Car);
+		return ResponseEntity.ok("Register found id: " + car);
 	}
 
     @GetMapping
 	public ResponseEntity<List<Car>> findByAll() {
 
-		List<Car> cars = CarService.findAllCar();	
+		List<Car> cars = carService.findAllCar();	
 
 		if (cars == null) {
 			return new ResponseEntity<List<Car>>(HttpStatus.NOT_FOUND);
@@ -119,26 +119,26 @@ public class CarController {
     @GetMapping(value = "{id}")
 	public ResponseEntity<Car> findById(@PathVariable("id") Long id) {
 
-		Optional<Car> opCar = CarService.findCarById(id);
-		Car Car =  opCar.get();
+		Optional<Car> opCar = carService.findCarById(id);
+		Car car =  opCar.get();
 
-		if (Car == null) {
+		if (car == null) {
 			return new ResponseEntity<Car>(HttpStatus.NOT_FOUND);
         }
         
-        return ResponseEntity.ok(Car);
+        return ResponseEntity.ok(car);
     }
     
     @GetMapping(value = "LicensePlate/{licensePlate}")
 	public ResponseEntity<Car> findByLicensePlate(String licensePlate) {
 
-		Car Car = CarService.findCarByLicensePlate(licensePlate);		
+		Car car = carService.findCarByLicensePlate(licensePlate);		
 
-		if (Car == null) {
+		if (car == null) {
 			return new ResponseEntity<Car>(HttpStatus.NOT_FOUND);
         }
         
-        return ResponseEntity.ok(Car);
+        return ResponseEntity.ok(car);
 	}
 
 }

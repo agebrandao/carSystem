@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserService UserService;
+    private UserService userService;
 
     //@PostMapping("/save")
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
@@ -42,7 +42,7 @@ public class UserController {
             }
             
             //Creates or updates the user
-            User userPersisted = (User) UserService.saveUser(user);
+            User userPersisted = (User) userService.saveUser(user);
             return ResponseEntity.ok(userPersisted);            
 
         } catch (Exception e) {           
@@ -54,7 +54,7 @@ public class UserController {
     private void validateCreateUser(User User, BindingResult result){
         if(User.getLogin() == null){
 
-            User UserExists = UserService.findUserByLogin(User.getLogin());
+            User UserExists = userService.findUserByLogin(User.getLogin());
             if (UserExists != null) {
                 result.addError(new ObjectError("User", "Login no information"));
             }
@@ -62,20 +62,20 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> update( HttpServletRequest request, @RequestBody User User, BindingResult result){
+    public ResponseEntity<User> update( HttpServletRequest request, @RequestBody User user, BindingResult result){
 
         try {
-            validateUpdateUser(User, result);
+            validateUpdateUser(user, result);
             if(result.hasErrors()){                        
-                return ResponseEntity.badRequest().body(User);        
+                return ResponseEntity.badRequest().body(user);        
             }
             
             //Creates or updates the user
-            User UserPersisted = (User) UserService.saveUser(User);
-            return ResponseEntity.ok(UserPersisted);
+            User userPersisted = (User) userService.saveUser(user);
+            return ResponseEntity.ok(userPersisted);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(User); 
+            return ResponseEntity.badRequest().body(user); 
             
         }
     }
@@ -94,13 +94,13 @@ public class UserController {
     @DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
 
-		Optional<User> opUser = UserService.findUserById(id);
+		Optional<User> opUser = userService.findUserById(id);
 		User User =  opUser.get();
 
 		if (User == null) {
 			return ResponseEntity.badRequest().body("Register not found id: "  + User); 
 		}
-        UserService.deleteUser(User);
+        userService.deleteUser(User);
     
 		return ResponseEntity.ok("Register found id: " + User);
 	}
@@ -108,7 +108,7 @@ public class UserController {
     @GetMapping
 	public ResponseEntity<List<User>> findByAll() {
 
-		List<User> users = UserService.findAllUser();	
+		List<User> users = userService.findAllUser();	
 
 		if (users == null) {
 			return new ResponseEntity<List<User>>(HttpStatus.NOT_FOUND);
@@ -121,26 +121,26 @@ public class UserController {
     @GetMapping(value = "{id}")
 	public ResponseEntity<User> findById(@PathVariable("id") Long id) {
 
-		Optional<User> opUser = UserService.findUserById(id);
-		User User =  opUser.get();
+		Optional<User> opUser = userService.findUserById(id);
+		User user =  opUser.get();
 
-		if (User == null) {
+		if (user == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         
-        return ResponseEntity.ok(User);
+        return ResponseEntity.ok(user);
     }
     
     @GetMapping(value = "/login/{login}")
 	public ResponseEntity<User> findByLogin(String login) {
 
-		User User = UserService.findUserByLogin(login);		
+		User user = userService.findUserByLogin(login);		
 
-		if (User == null) {
+		if (user == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
         }
         
-        return ResponseEntity.ok(User);
+        return ResponseEntity.ok(user);
 	}
 
 }

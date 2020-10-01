@@ -1,6 +1,7 @@
 package com.project.ApiCarSystem.security;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.FilterChain;
@@ -24,7 +25,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
-		super();
+		setAuthenticationFailureHandler(new JWTAuthenticationFailureHandler());
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
 	}
@@ -37,7 +38,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Credentials creds = new ObjectMapper()
                     .readValue(req.getInputStream(), Credentials.class);
 
-            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getLogin(), creds.getPassword());
+            UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getLogin(), creds.getPassword(), new ArrayList<>());
             Authentication auth = authenticationManager.authenticate(authToken);
             
             return auth;
@@ -55,7 +56,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
        String username = ((UserSpringSecurity) auth.getPrincipal()).getUsername();
        String token = jwtUtil.generationToken(username);
-       res.addHeader("Authorization", "Bearer" + token);
+       res.addHeader("Authorization", "Bearer " + token);
     }
 	
 	private class JWTAuthenticationFailureHandler implements AuthenticationFailureHandler {
