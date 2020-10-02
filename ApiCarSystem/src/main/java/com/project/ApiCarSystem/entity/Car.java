@@ -9,11 +9,11 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.springframework.test.context.jdbc.Sql;
+//import org.springframework.test.context.jdbc.Sql;
 
 @Entity
 @Table(name = "car")
-@Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
+//@Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
 public class Car {
 
 	@Id

@@ -1,7 +1,5 @@
 package com.project.ApiCarSystem.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.project.ApiCarSystem.Exceptions.FieldMessage;
 import com.project.ApiCarSystem.entity.User;
 

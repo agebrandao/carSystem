@@ -8,13 +8,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import org.springframework.test.context.jdbc.Sql;
+//import org.springframework.test.context.jdbc.Sql;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
-@Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
+//@Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
 public class User {
 
     @Id
