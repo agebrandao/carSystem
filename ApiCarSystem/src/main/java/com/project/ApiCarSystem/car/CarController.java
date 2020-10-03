@@ -91,7 +91,7 @@ public class CarController {
 		}
         carService.deleteCar(car);
     
-		return ResponseEntity.ok("Register found id: " + car);
+		return ResponseEntity.ok("Deleted car!");
 	}
 
     @GetMapping

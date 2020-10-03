@@ -8,13 +8,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-//import org.springframework.test.context.jdbc.Sql;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
-//@Sql(statements="CREATE SCHEMA IF NOT EXISTS DUMMY")
 public class User {
 
     @Id
@@ -31,7 +28,7 @@ public class User {
     private String lastName;
     
     @Column(name = "email")
-    @Email(message = "Please provide a valid Email")
+    @Email(message = "Invalid field: Please provide a valid Email")
     @Size(max = 30, message="Maximum size 30 caracters")
     private String email;
     
@@ -44,7 +41,7 @@ public class User {
     private String phone;
     
     @Column(name = "login")
-    @NotEmpty(message = "Please provide your login")
+    @NotEmpty(message = "Missing field: Please provide your login")
     @Size(max = 15, message="Maximum size 15 caracters")
     private String login;
 
@@ -54,7 +51,7 @@ public class User {
     @Size(max = 100, message="Maximum size 100 caracters")
     private String password;
 
-    @OneToMany //(cascade=CascadeType.ALL)
+	@OneToMany 
     Set<Car> cars;
 
 	public Long getId() {
@@ -120,7 +117,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}    
-
+	
 	public Set<Car> getCars() {
 		return cars;
 	}

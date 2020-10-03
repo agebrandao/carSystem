@@ -89,7 +89,7 @@ public class UserController {
 		}
         userService.deleteUser(User);
     
-		return ResponseEntity.ok("Register found id: " + User);
+		return ResponseEntity.ok("Deleted user!");
 	}
 
     @GetMapping

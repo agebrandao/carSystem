@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	JwtUtil jwtUtil;
 	
     private static final String[] PUBLIC_MATCHES = {
-    		"/h2/**",    		
+    		"/h2/**",           
     		"/apiCarSystem/users/**"
     };
     

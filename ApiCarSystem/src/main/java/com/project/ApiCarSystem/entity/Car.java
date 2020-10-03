@@ -25,7 +25,7 @@ public class Car {
     private Integer year;    
 
 	@Column(name = "licensePlate")
-    @NotEmpty(message = "Please provide the car license Plate")
+    @NotEmpty(message = "Missing field: Please provide the car license Plate")
 	@Size(max = 8, message="Maximum size 8 caracters")
     private String licensePlate;
    

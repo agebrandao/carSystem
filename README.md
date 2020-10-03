@@ -1,10 +1,10 @@
-### Car System. 
+###  Car System. 
 
-The Car System was implemented with a back-end in Spring boot
+The Car System was implemented with a back-end in Spring boot.
 
 ---
 
-## ðŸ�� Getting Started 
+## Getting Started 
 
 These instructions will get you a copy of the project for running on your local machine.
 
@@ -16,96 +16,137 @@ The ApiCarSystm runs on port 3000 and uses the H2 database
 
 The application.properties file contains the connection data to the database
 
-## â›�ï¸� Built Using 
+## Built Using 
 
 - [Maven dependencies]
+  - JPA
+  - Security
+  - JUnit
+  - JWT
+  - H2
+  - Tomcat
 
 
-## ðŸ”§ Running the application
+## Running the application 
 
 Run as Java application
 
+## Running the unit test
 
-## End-points:
+Run as maven test
+
+## Running the build
+
+ Run as maven build
+ Goal: clean install
+
+## EndPoints:
 
 # Users:
 
 1. Lists all users:
 
-(Get) http://localhost:3000/ApiCarSystem/user
+(Get) http://localhost:3000/apiCarSystem/users/
 
-ðŸŽˆ return json
-
+  return:
+ 
 [
-  {
-    "id": 1,
-    "firstName": "Maria",
-    "lastName": "teste",
-    "email": "teste@gmail,com",
-    "birthday": "2020-01-01",
-    "phone": "8133336658",
-    "login": "maria",
-    "password": "12346",
-    "cars": [
-       {
-        "id": 1,
-        "licensePlate": "kkk-1234",
-        "model": "ka",
-        "color": "preto"
-      }
-    ]
-  }
+    {
+        "id": 2,
+        "firstName": "Anna",
+        "lastName": "Kokay",
+        "email": "anna@gmail.com",
+        "birthday": null,
+        "phone": "8133336658",
+        "login": "anna",
+        "password": "$2a$10$rpFeS/R3io6djG.9ZuC.Wea8Ih0f3JyNjQI4gTrcwyTy4IYM9go8e",
+        "cars": [
+	        {
+		        "id": 1,
+		        "licensePlate": "kkk-1234",
+		        "model": "ka",
+		        "color": "preto"
+	      	}
+        ]
+    }
 ]
 
 2. Create user: 
 
 (Post) http://localhost:3000/ApiCarSystem/car
 
- ðŸ§� Body:
+  Body:
  
- {
-	"name": "Mary",
-	"email": "mary@email.com",
-	"is_loyalty": false
-}
+   { 
+    "firstName": "Maria",
+    "lastName": "Silva",
+    "email": "maria@gmail.com",
+    "phone": "8133339999",
+    "login": "maria",
+    "password": "123456"
+  }
 
-ðŸŽˆ return
+  return:
 
 {
-    "id": 1,
-    "name": "Mary",
-    "email": "Mary@email.com",
-    "is_loyalty": true,
-    "updatedAt": "2020-02-05T00:11:04.536Z",
-    "createdAt": "2020-02-05T00:11:04.536Z"
+    "id": 2,
+    "firstName": "Maria",
+    "lastName": "Silva",
+    "email": "maria@gmail.com",
+    "birthday": null,
+    "phone": "8133339999",
+    "login": "maria",
+    "password": "$2a$10$rpFeS/R3io6djG.9ZuC.Wea8Ih0f3JyNjQI4gTrcwyTy4IYM9go8e",
+    "cars": [
+	        {
+		        "id": 1,
+		        "licensePlate": "kkk-1234",
+		        "model": "ka",
+		        "color": "preto"
+	      	}
+        ]
 }
 
 3. Update user:
 
-(PUT) http://localhost:3001/users/1
+(PUT) http://localhost:3000/users
 
- ðŸ§� Body:
+  Body:
+ 
+  {
+    "id":2,
+    "firstName": "Maria",
+    "lastName": "Silva",
+    "email": "maria123@gmail.com",
+    "login": "maria"       
+  }
+
+  return: 
+
 {
-	"name": "Anne",
-	"is_loyalty": false
-}
-
-ðŸŽˆ return 
-
-{
-    "id": 1,
-    "name": "Anne",
-    "email": "Mary@email.com",
-    "is_loyalty": false,
-    "updatedAt": "2020-02-05T00:11:04.536Z",
-    "createdAt": "2020-02-05T00:11:04.536Z"
+    "id": 2,
+    "firstName": "Maria",
+    "lastName": "Silva",
+    "email": "mari2a@gmail.com",
+    "birthday": null,
+    "phone": 8133336658,
+    "login": "maria",
+    "password": "$2a$10$rpFeS/R3io6djG.9ZuC.Wea8Ih0f3JyNjQI4gTrcwyTy4IYM9go8e",
+    "cars": [
+	        {
+		        "id": 1,
+		        "licensePlate": "kkk-1234",
+		        "model": "ka",
+		        "color": "preto"
+	      	}
+        ]
 }
 
 4. Delete user:
 
-(DELETE) http://localhost:3001/users/1
+(DELETE) http://localhost:3000/users/1
 
-ðŸŽˆ return
+ return:
 {
     "message": "Deleted user!"
 }
@@ -114,253 +155,139 @@ Run as Java application
 
 1. Lists all cars:
 
-(Get) http://localhost:3000/ApiCarSystem/car
+(Get) http://localhost:3000/ApiCarSystem/cars
 
-ðŸŽˆ return
-[
-  {
-    "id": 1,
-    "licensePlate": "kkk-1234",
-    "model": "ka",
-    "color": "preto"
-  }
-]
+ ðŸ“„ return: 
+	[
+		{
+		    "id": 1,
+		    "year": 2000,
+		    "licensePlate": "kkk-1234",
+		    "model": "ka",
+		    "color": "preto"
+		}
+	]
 
 2. Create car: 
 
-(Post) http://localhost:3001/cars
+(Post) http://localhost:3000/ApiCarSystem/cars
 
- ðŸ§� Body:
+ Body:
  
- {
-        "manufacturer": "HONDA",
-        "model": "Accord Sedan LX 2.0 16V 150/156cv Aut.",
-        "model_year": "2020",
-        "category": "2",
-        "weekday_price": "120.00",
-        "weekend_price": "110.00",
-        "weekday_loyalty_price": "110.00",
-        "weekend_loyalty_price": "100.00",
-        "createdAt": "2020-02-03T21:04:51.815Z",
-        "updatedAt": "2020-02-03T21:04:51.815Z"
-  }
+   {
+     	"year": 2000,
+        "licensePlate": "kkk-1234",
+        "model": "ka",
+        "color": "preto"
+   }
 
-ðŸŽˆ return
+ return:
 
-{
-        "id": 1,
-        "manufacturer": "HONDA",
-        "model": "Accord Sedan LX 2.0 16V 150/156cv Aut.",
-        "model_year": "2020",
-        "category": "2",
-        "weekday_price": "120.00",
-        "weekend_price": "110.00",
-        "weekday_loyalty_price": "110.00",
-        "weekend_loyalty_price": "100.00",
-        "createdAt": "2020-02-03T21:04:51.815Z",
-        "updatedAt": "2020-02-03T21:04:51.815Z"
- }
+   {
+       "id": 1,
+       "year": 2000,
+       "licensePlate": "kkk-1234",
+       "model": "ka",
+       "color": "preto"
+   }
 
 3. Update car:
 
-(PUT) http://localhost:3001/cars/1
+(PUT) http://localhost:3000/apiCarSystem/cars
 
- ðŸ§� Body:
+ Body:
  
-{
-	"manufacturer": "Ford",
-	"model": "Ka 1.0 SEL TiVCT Flex 5p",
-	"model_year": "2013",
-	"category": 1,
-	"weekday_price": 130.00,
-	"weekend_price": 120.00,
-	"weekday_loyalty_price": 100.00,
-	"weekend_loyalty_price": 90.00
-}
+   {  
+       "id":"1",  
+       "licensePlate": "kkk-9999",
+       "model": "ka",
+       "color": "preto"
+   }
 
-ðŸŽˆ return 
+ return:
 
-{
-    "id": 1,
-	"manufacturer": "Ford",
-	"model": "Ka 1.0 SEL TiVCT Flex 5p",
-	"model_year": "2013",
-	"category": 1,
-	"weekday_price": 130.00,
-	"weekend_price": 120.00,
-	"weekday_loyalty_price": 100.00,
-	"weekend_loyalty_price": 90.00
-    "createdAt": "2020-02-03T21:04:51.815Z",
-    "updatedAt": "2020-02-03T21:04:51.815Z"
-}
+   {
+       "id": 1,
+       "year": 2000,
+       "licensePlate": "kkk-9999",
+       "model": "ka",
+       "color": "preto"
+    }
 
 4. Delete car:
 
-(DELETE) http://localhost:3001/users/1
+(DELETE) http://localhost:3000/users/1
 
-ðŸŽˆ return
-{
-    "message": "Deleted car!"
-}
+ return:
+	{
+	    "message": "Deleted car!"
+	}
 
-# Rents:
-
-1. Lists all rents:
-
-(Get) http://localhost:3001/rents
-
-ðŸŽˆ return
-
-[
- {
-    "id": 1,
-    "user_id": 1,
-    "car_id": 1,
-    "start_date": "2020-10-20",
-    "end_date": "2020-10-21T00:00:00.000Z",
-    "rent_cost": "200.00",
-    "updatedAt": "2020-02-05T00:24:32.486Z",
-    "createdAt": "2020-02-05T00:24:32.486Z"
- }
-]
-
-2. Create rent: 
-
-(Post) http://localhost:3001/rents
-
- ðŸ§� Body:
- 
- {
-  {
-	"user_id": 1,
-	"car_id": 1,
-	"start_date": "20201020",
-	"end_date": "20201021",
-	"rent_cost": 200.00
- }
-}
-
-ðŸŽˆ return
-{
-    "id": 1,
-    "user_id": 1,
-    "car_id": 1,
-    "start_date": "2020-10-20",
-    "end_date": "2020-10-21T00:00:00.000Z",
-    "rent_cost": "200.00",
-    "updatedAt": "2020-02-05T00:24:32.486Z",
-    "createdAt": "2020-02-05T00:24:32.486Z"
- }
-
-3. Update rent:
-
-(PUT) http://localhost:3001/rents/1
-
- ðŸ§� Body:
-{
-	"start_date": "20201020",
-	"end_date": "20201021",
-	"rent_cost": 300.00
-}
-
-ðŸŽˆ return 
-
-{
-    "id": 1,
-    "user_id": 1,
-    "car_id": 1,
-    "start_date": "2020-10-20",
-    "end_date": "2020-10-21T00:00:00.000Z",
-    "rent_cost": "300.00",
-    "updatedAt": "2020-02-05T00:24:32.486Z",
-    "createdAt": "2020-02-05T00:24:32.486Z"
- }
-
-4. Delete car:
-
-(DELETE) http://localhost:3001/rents/1
-
-ðŸŽˆ return
-{
-    "message": "Deleted rent!"
-}
 
 # Searches:
 
-1. Lists all cars by category:
+1. Search the user by id:
 
-(Get) http://localhost:3001/carsByCategorySearch
+(Get) http://localhost:3000/apiCarSystem/users/1
 
- ðŸ§� Body:
+ return:
+
+   {
+       "id": 1,
+       "firstName": "Jose",
+       "lastName": "Silva",
+       "email": "jose@gmail.com",
+       "birthday": null,
+       "phone": "8133336658",
+       "login": "jose",
+       "password": "$2a$10$vlNpsEi0XcIe.UIoHCHequZWEAWwvCBxZavyeoDXKCXDQDw9/lN16",
+       "cars": []
+   }
+
+2.  Search the car by id:
+
+(GET) http://localhost:3000/apiCarSystem/cars/1 
+
+ return: 
+
+   {
+       "id": 1,
+       "year": null,
+       "licensePlate": "kkk-9999",
+       "model": "ka",
+       "color": "preto"
+   }
+
+# Login:
+
+(Post) http://localhost:3000/login
+
+ Body:
 {
-	"category": "1"
+    "login": "maria",
+    "password": "123456"
 }
 
-ðŸŽˆ return 
+ return:
+   
+  Header:
+  Authorization:
+  Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbm5hIiwiZXhwIjoxNjAxNjg3N
+  	jUzfQ.b5m92XywKOYxMhy-L938zcxT757lCkgZ5xuqizW-oTRoV7L_EDQSS7rrMKkXJg8r1iUVnw7IXybtARZCH-uEUw
+  	
+# Sprints:
 
-[
-    {
-        "id": 1,
-        "manufacturer": "Ford",
-        "model": "Ka 1.0 SEL TiVCT Flex 5p",
-        "model_year": "2013",
-        "category": "1",
-        "weekday_price": "130.00",
-        "weekend_price": "120.00",
-        "weekday_loyalty_price": "100.00",
-        "weekend_loyalty_price": "90.00",
-        "createdAt": "2020-02-03T23:33:39.960Z",
-        "updatedAt": "2020-02-03T23:33:39.960Z"
-    }
-]
+  1. Initial Settings
+  2. Crud Operations 
+  3. JWT Authentication
+  4. JWT Authorization
+  5. Validations
+  6. Unit test
+  
+### Front-end (ApiCarSystem)
+ 
+ The Car System was implemented with a front-end in React.js
+   
+## Authors <a name = "authors"></a>
 
-2. Search the cheapest rental car by date:
-
-(GET) http://localhost:3001/cheapestRentCarSearch 
-
- ðŸ§� Body:
-{
-	"start_date": "2020-02-01T21:00:30.086Z",
-	"end_date": "2020-02-04T21:00:30.086Z",
-	"user":{
-		"user_id":1,
-		"name": "Mary",
-		"email": "mary@email.com",
-		"is_loyalty": false
-	}
-}
-
-ðŸŽˆ return 
-
-{
-    "user": {
-        "user_id": 1,
-        "name": "Mary",
-        "email": "mary@email.com",
-        "is_loyalty": false
-    },
-    "car": {
-        "id": 1,
-        "manufacturer": "Ford",
-        "model": "Ka 1.0 SEL TiVCT Flex 5p",
-        "model_year": "2013",
-        "category": "2",
-        "weekday_price": "130.00",
-        "weekend_price": "120.00",
-        "weekday_loyalty_price": "100.00",
-        "weekend_loyalty_price": "90.00",
-        "createdAt": "2020-02-04T19:04:48.059Z",
-        "updatedAt": "2020-02-04T19:04:48.059Z"
-    },
-    "start_date": "2020-02-04T21:00:30.086Z",
-    "end_date": "2020-02-04T21:00:30.086Z",
-    "rent_cost": 370.99
-}
-
-
-
-
-
-## âœ�ï¸� Authors <a name = "authors"></a>
-
-- [@annakokay](agebrandao@gmail.com) - Idea & Initial work
+- [@agebrandao] - Idea & Initial work
