@@ -157,7 +157,7 @@ Run as maven test
 
 (Get) http://localhost:3000/ApiCarSystem/cars
 
- ðŸ“„ return: 
+ Ã°Å¸â€œâ€ž return: 
 	[
 		{
 		    "id": 1,
@@ -286,7 +286,50 @@ Run as maven test
   
 ### Front-end (ApiCarSystem)
  
- The Car System was implemented with a front-end in React.js
+ The Car System was implemented with a front-end in React.js)
+
+ This application runs on port 3001
+
+## â›ï¸ Built Using 
+
+- [react] 16.12.0
+- [axios]
+- [bootstrap]
+- [font-awesome]
+- [react-datepicker]
+- [react-dom]
+- [react-router]
+- [react-router-dom]
+- [react-scripts]
+
+
+## Running the application
+
+Commands for running the application:
+1. yarn install (is used to install all dependencies for a project)
+2. yarn start
+
+## Screens
+
+1 List of cars:
+
+Displays all registered cars displaying: year, License Plate, model  and color.
+
+On this screen it is possible to delete cars and choose a car to update.
+
+2. Car registration:
+
+Displays all fields for registering cars
+
+3. List of users:
+
+Displays all registered users displaying: firstName, lastName, email, birthday, login, phone and cars.
+
+On this screen it is possible to delete users and choose a user to update.
+
+4. User registration:
+
+Displays all fields for registering users
    
 ## Authors <a name = "authors"></a>
 
