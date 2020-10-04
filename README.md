@@ -35,6 +35,8 @@ Run as Java application
 
 Run as maven test
 
+<img src=”https://github.com/agebrandao/carSystem/blob/master/images/testResult-backend.png”>
+
 ## Running the build
 
  Run as maven build
@@ -157,7 +159,7 @@ Run as maven test
 
 (Get) http://localhost:3000/ApiCarSystem/cars
 
- ÃƒÂ°Ã…Â¸Ã¢â‚¬Å“Ã¢â‚¬Å¾ return: 
+ return: 
 	[
 		{
 		    "id": 1,
@@ -286,9 +288,18 @@ Run as maven test
   
 ### Front-end (ApiCarSystem)
  
- The Car System was implemented with a front-end in React.js)
+ The Car System was implemented with a front-end in React.js (Hooks)
 
  This application runs on port 3001
+ 
+ http://localhost:3001/login
+ http://localhost:3001/home
+ http://localhost:3001/users
+ http://localhost:3001/user/:user
+ http://localhost:3001/cars
+ http://localhost:3001/car/:car
+ 
+ <img src=”https://github.com/agebrandao/carSystem/blob/master/images/homeScreen.png”>
 
 ## Built Using 
 
@@ -317,9 +328,13 @@ Displays all registered cars displaying: year, License Plate, model  and color.
 
 On this screen it is possible to delete cars and choose a car to update.
 
+<img src=”https://github.com/agebrandao/carSystem/blob/master/images/carsScreen.png”>
+
 2. Car registration:
 
 Displays all fields for registering cars
+
+<img src=”https://github.com/agebrandao/carSystem/blob/master/images/carScreen.png”>
 
 3. List of users:
 
@@ -327,9 +342,13 @@ Displays all registered users displaying: firstName, lastName, email, birthday, 
 
 On this screen it is possible to delete users and choose a user to update.
 
+<img src=”https://github.com/agebrandao/carSystem/blob/master/images/usersScreen.png”>
+
 4. User registration:
 
 Displays all fields for registering users
+
+<img src=”https://github.com/agebrandao/carSystem/blob/master/images/userScreen.png”>
    
 ## Authors <a name = "authors"></a>
 
