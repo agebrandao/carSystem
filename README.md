@@ -35,7 +35,7 @@ Run as Java application
 
 Run as maven test
 
-<img src=”https://github.com/agebrandao/carSystem/blob/master/images/testResult-backend.png”>
+![image](https://github.com/agebrandao/carSystem/blob/master/images/testResult-backend.png?raw=true)
 
 ## Running the build
 
