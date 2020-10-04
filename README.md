@@ -1,6 +1,6 @@
 ###  Car System. 
 
-The Car System was implemented with a back-end in Spring boot.
+The Car System was implemented with a back-end in Spring boot and front-end in React.js 
 
 ---
 
