@@ -328,13 +328,13 @@ Displays all registered cars displaying: year, License Plate, model  and color.
 
 On this screen it is possible to delete cars and choose a car to update.
 
-![alt text](https://github.com/agebrandao/carSystem/blob/master/images/carsScreen.png?raw=true)
+![image](https://github.com/agebrandao/carSystem/blob/master/images/carsScreen.png?raw=true)
 
 2. Car registration:
 
 Displays all fields for registering cars
 
-![alt text](https://github.com/agebrandao/carSystem/blob/master/images/carScreen.png?raw=true)
+![image](https://github.com/agebrandao/carSystem/blob/master/images/carScreen.png?raw=true)
 
 3. List of users:
 
@@ -342,13 +342,13 @@ Displays all registered users displaying: firstName, lastName, email, birthday, 
 
 On this screen it is possible to delete users and choose a user to update.
 
-![alt text](https://github.com/agebrandao/carSystem/blob/master/images/usersScreen.png?raw=true)
+![image](https://github.com/agebrandao/carSystem/blob/master/images/usersScreen.png?raw=true)
 
 4. User registration:
 
 Displays all fields for registering users
 
-![alt text](img src=”https://github.com/agebrandao/carSystem/blob/master/images/userScreen.png?raw=true)
+![image](https://github.com/agebrandao/carSystem/blob/master/images/userScreen.png?raw=true)
    
 ## Authors <a name = "authors"></a>
 
