@@ -286,7 +286,7 @@ Run as maven test
   5. Validations
   6. Unit test
   
-### Front-end (ApiCarSystem)
+### Front-end (car-system-front)
  
  The Car System was implemented with a front-end in React.js (Hooks)
 
