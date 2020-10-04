@@ -292,14 +292,14 @@ Run as maven test
 
  This application runs on port 3001
  
- http://localhost:3001/login
- http://localhost:3001/home
- http://localhost:3001/users
- http://localhost:3001/user/:user
- http://localhost:3001/cars
- http://localhost:3001/car/:car
+ - http://localhost:3001/login
+ - http://localhost:3001/home
+ - http://localhost:3001/users
+ - http://localhost:3001/user/:user
+ - http://localhost:3001/cars
+ - http://localhost:3001/car/:car
  
- ![alt text](https://github.com/agebrandao/carSystem/blob/master/images/homeScreen.png?raw=true)
+ ![image](https://github.com/agebrandao/carSystem/blob/master/images/homeScreen.png?raw=true)
 
 ## Built Using 
 
