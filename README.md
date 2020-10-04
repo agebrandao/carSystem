@@ -55,12 +55,12 @@ Run as maven test
 [
     {
         "id": 2,
-        "firstName": "Anna",
-        "lastName": "Kokay",
-        "email": "anna@gmail.com",
+        "firstName": "maria",
+        "lastName": "Silva",
+        "email": "maria@gmail.com",
         "birthday": null,
-        "phone": "8133336658",
-        "login": "anna",
+        "phone": "8133339999",
+        "login": "maria",
         "password": "$2a$10$rpFeS/R3io6djG.9ZuC.Wea8Ih0f3JyNjQI4gTrcwyTy4IYM9go8e",
         "cars": [
 	        {
