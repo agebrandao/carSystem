@@ -1,39 +1,55 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router'
 import { Link } from 'react-router-dom'
 
 import ApiAxios from '../../config/apiAxios';
 import Share  from '../../share';
 
-export default function CarList() {
+export default function CarList(props) {
 
     const [car, setCar] = useState('');
 
     const [cars, setCars] = useState([]);
 
-    const [filterSearch, setFilterSearch] = useState('');
+    const [redirect, setRedirect] = useState(false);
 
     useEffect(() =>{
-        getCarList('');
+
+        // User cars list
+        if(props &&  props.userCars){
+            const userCars = props.userCars;
+            userCars.map(carItem => carItem != null ? setCar(carItem) : '')                          
+        }else{        
+            //all cars
+            getCarList('');
+        }
+                
     },[]);
 
     useEffect(() => {
-        setCars([...cars, car]);
-    }, [car]);
+        if(car != ''){
+            setCars([...cars, car]);
+        }
+    }, [car]);    
 
     async function getCarList() {
-
+         
         const urlCars = Share.baseUrl +'/cars';
 
         let url = urlCars;
         
-        await ApiAxios.get(url)
-            .then(res => {
-              
-                setCars(res.data);
-                                    
-            }).catch(function (error) {
+        try{
+            const response = await ApiAxios.get(url);
+            setCars(response.data);
+        }catch(error){
+            if(error.status == 403){
+                alert("Access Denied");
+                setRedirect(true);
+            }else{
                 alert(error.message);
-        })
+            }
+            
+        }    
     }
 
     async function removeCar(car) {
@@ -44,12 +60,14 @@ export default function CarList() {
 
             let url = urlCars +'/'+ car.id;
 
-            await ApiAxios.delete(url)
-            .then(res => {
-                setCars(cars.filter(carItem => carItem != car)); 
-            }).catch(function (error) {
+            try{
+                const response = await ApiAxios.delete(url);   
+                alert(response.data);
+                setCars(cars.filter(carItem => carItem != car));  
+            }catch(error){
                 alert(error.message);
-            });
+            }
+
         }else{
             alert("Select a car");
         }
@@ -94,6 +112,8 @@ export default function CarList() {
 
     return (
         <React.Fragment>
+
+            {redirect ? <Redirect to='/login' /> : '' }
 
             <div className="bg-light">
                 <div className="p-3 mb-2 bg-light text-dark text-center">

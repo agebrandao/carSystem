@@ -51,8 +51,11 @@ public class User {
     @Size(max = 100, message="Maximum size 100 caracters")
     private String password;
 
-	@OneToMany 
+    @OneToMany//(mappedBy = "user")
     Set<Car> cars;
+
+	@Column(name = "createdAt")
+	private Date createdAt;
 
 	public Long getId() {
 		return id;
@@ -124,5 +127,13 @@ public class User {
 
 	public void setCars(Set<Car> cars) {
 		this.cars = cars;
+	}
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 }

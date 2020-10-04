@@ -81,17 +81,15 @@ export default function CarForm(props) {
 
         const urlCars = Share.baseUrl +'/cars';
 
-        const method = car.id ? 'put' : 'post';
+        const method = car.id ? 'put' : 'post';    
         
-        const url = car.id ? `${urlCars}/${car.id}` : urlCars;
-        
-        await ApiAxios[method](url, car)
-        .then(res => {
+        try{
+            const response = await ApiAxios[method](urlCars, car);
             alert('Saved car');
             setRedirect(true);
-        }).catch(function (error) {
+        }catch(error){
             alert(error.message);
-        });       
+        }      
     }
 
     return (

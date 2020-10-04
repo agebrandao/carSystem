@@ -12,7 +12,7 @@ export default function UserForm(props) {
 
     const [user, setUser] = useState('');
 
-    const [id, setId] = useState('');    
+    const [id, setId] = useState();    
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -40,10 +40,11 @@ export default function UserForm(props) {
                 "birthday": props.location.user.birthday,
                 "login": props.location.user.login,
                 "password": props.location.user.password,
-                "phone": props.location.user.phone            
+                "phone": props.location.user.phone,   
+                "cars" : props.location.user.cars         
             }
 
-            setUser(userEdit);         
+            setUser(userEdit);                              
         }
 
     },[]);
@@ -61,7 +62,8 @@ export default function UserForm(props) {
             setBirthday(user.birthday);     
             setLogin(user.login);    
             setPassword(user.password);    
-            setPhone(user.phone);         
+            setPhone(user.phone);    
+            setCars(user.cars);     
         }
         
     },[user]);
@@ -76,7 +78,8 @@ export default function UserForm(props) {
             "birthday": birthday,
             "login": login,
             "password": password,
-            "phone": phone    
+            "phone": phone,
+            "cars": cars,
         }
 
         // For edit user
@@ -89,7 +92,8 @@ export default function UserForm(props) {
 
     }
 
-    function cleanInput(){                
+    function cleanInput(){ 
+        setId('');               
         setFirstName('');
         setLastName('');
         setEmail('');
@@ -97,79 +101,33 @@ export default function UserForm(props) {
         setLogin('');    
         setPassword('');    
         setPhone('');         
+        setCars([]);
     }
 
     async function saveUser(user) {
 
-        const urlUsers = Share.baseUrl +'/users';
+        const urlUsers = Share.baseUrl +'/users/';
 
         const method = user.id ? 'put' : 'post';
-        
-        const url = user.id ? `${urlUsers}/${user.id}` : urlUsers;
-        
-        await ApiAxios[method](url, user)
-        .then(res => {
+    
+        try{
+            const response = await ApiAxios[method](urlUsers, user);
             alert('Saved user');
             setRedirect(true);
-        }).catch(function (error) {
+        }catch(error){
             alert(error.message);
-        });       
+        }
+              
     }
 
-    async function removeCar(car) {
-
-        const urlCars = Share.baseUrl +'/cars';
-
-        if (car.id && car.id > 0) {
-
-            let url = urlCars +'/'+ car.id;
-
-            await ApiAxios.delete(url)
-            .then(res => {
-                setCars(cars.filter(carItem => carItem != car)); 
-            }).catch(function (error) {
-                alert(error.message);
-            });
-        }else{
-            alert("Select a car");
+    function showCars(){
+        if(user.cars != null && user.cars.length > 0){
+            return (
+                <React.Fragment>
+                    <CarList userCars={user.cars}/>
+                </React.Fragment>
+            )
         }
-    }
-
-    function rowsCar() {
-
-        const rows = [];
-
-        if (cars) {
-            cars.map(carItem => {
-                rows.push(<tr key={carItem.id}>
-                    {
-                        <React.Fragment>
-                            <td >{carItem.id}</td>
-                            <td >{carItem.year}</td>
-                            <td>{carItem.licensePlate}</td>
-                            <td>{carItem.model}</td>
-                            <td>{carItem.color}</td>                            
-                            <td >
-                                <Link to={{
-                                    pathname: '/car/:car',
-                                    car: carItem
-                                }}>
-                                    <i className="fa fa-pencil"></i>
-                                </Link>
-
-                                &nbsp; &nbsp;
-
-                                <Link to={{}}
-                                    onClick={() => removeCar(carItem)}>
-                                    <i className="fa fa-trash"></i>
-                                </Link>
-                            </td>
-                        </React.Fragment>
-                    }
-                </tr>)
-            });
-        }
-        return rows
     }
 
     return (
@@ -250,10 +208,10 @@ export default function UserForm(props) {
                     <div className="col-md-6 mb-3">
                         <label htmlFor="validationPhone">Phone</label>
                         <input type="text" className="form-control" name="phone"
-                            id="validationPhone" placeholder="Phone" required
+                            id="validationPhone" placeholder="Phone" 
                             value={phone}
                             max-length="15"
-                            onChange={e => { setFirstName(e.target.value); }} />
+                            onChange={e => { setPhone(e.target.value); }} />
                     </div>
                    
                 </div>
@@ -262,8 +220,9 @@ export default function UserForm(props) {
                     <h3>Cars</h3>
                 </div>
 
-              <CarList/>
-                
+              {/* <CarList userCars={user.cars}/> */}
+              {showCars()}
+
                 <div>
                     <button className="btn btn-primary" type="submit" className="btn-primary">
                         Salvar

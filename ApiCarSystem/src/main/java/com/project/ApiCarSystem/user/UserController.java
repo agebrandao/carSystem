@@ -80,16 +80,18 @@ public class UserController {
     
     @DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> delete(@PathVariable("id") Long id) {
-
+    	
 		Optional<User> opUser = userService.findUserById(id);
-		User User =  opUser.get();
-
-		if (User == null) {
-			return ResponseEntity.badRequest().body("Register not found id: "  + User); 
+		if(opUser.isPresent()){
+			User User =  opUser.get();
+				
+	        userService.deleteUser(User);
+	        
+	        return ResponseEntity.ok("Deleted user!");
+		}else{
+			return ResponseEntity.badRequest().body("User not found");
 		}
-        userService.deleteUser(User);
-    
-		return ResponseEntity.ok("Deleted user!");
+        		
 	}
 
     @GetMapping

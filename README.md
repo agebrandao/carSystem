@@ -290,7 +290,7 @@ Run as maven test
 
  This application runs on port 3001
 
-## â›ï¸ Built Using 
+## Built Using 
 
 - [react] 16.12.0
 - [axios]

@@ -25,15 +25,13 @@ export default function UserList() {
 
         let url = urlUsers;
         
-        await ApiAxios.get(url)
-            .then(res => {
-               
-                
-                    setUsers(res.data);
-                                  
-            }).catch(function (error) {
-                alert(error.message);
-        })
+        try{
+            const response = await ApiAxios.get(url);
+            setUsers(response.data);
+        }catch(error){
+            alert(error.message);
+        }
+            
     }
 
     async function removeUser(user) {
@@ -44,12 +42,14 @@ export default function UserList() {
 
             let url = urlUsers +'/'+ user.id;
 
-            await ApiAxios.delete(url)
-            .then(res => {
+            try{
+                const response = await ApiAxios.delete(url);   
+                alert(response.data);
                 setUsers(users.filter(userItem => userItem != user)); 
-            }).catch(function (error) {
+            }catch(error){
                 alert(error.message);
-            });
+            }
+          
         }else{
             alert("Select a user");
         }

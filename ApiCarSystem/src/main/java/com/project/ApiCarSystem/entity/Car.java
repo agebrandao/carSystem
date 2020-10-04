@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -36,6 +38,10 @@ public class Car {
     @Column(name = "color")
     @Size(max = 15, message="Maximum size 15 caracters")
     private String color;
+
+//	@ManyToOne
+//    @JoinColumn(name="user_id")
+//    private User user;
 
 	public Long getId() {
 		return id;
@@ -76,5 +82,13 @@ public class Car {
 	public void setYear(Integer year) {
 		this.year = year;
 	}
+	
+//    public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
 
 }
